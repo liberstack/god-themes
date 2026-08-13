@@ -2,8 +2,8 @@ export const themes = {
   fire: {
     key: "fire",
     name: "Fire",
-    title: "War God",
-    creature: "Primordial Fire",
+    title: "Primal Fire",
+    creature: "Bonfire",
     element: "War · Fire · Ash",
     image: "./assets/fire.jpg",
     accent: "#e0452c",
