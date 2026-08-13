@@ -1,0 +1,289 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Fraunces:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&family=Work+Sans:wght@300;400;500;600&display=swap");
+
+:root {
+  --accent: #b9c4d0;
+  --accent-soft: rgba(185, 196, 208, 0.3);
+  --background: #0a0a0c;
+  --surface: #141417;
+  --ink: #f4f1ea;
+
+  --font-display: "Cinzel", "Iowan Old Style", serif;
+  --font-body: "Work Sans", -apple-system, sans-serif;
+  --title-weight: 700;
+  --title-tracking: 0em;
+  --tagline-style: normal;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--background);
+  color: var(--ink);
+  overflow-x: hidden;
+  transition: background 1400ms var(--ease), color 1400ms var(--ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.stage {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ---------- ambient backdrop: two stacked layers crossfade + slow ken-burns zoom ---------- */
+
+.backdrop-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  opacity: 0;
+  transform: scale(1);
+  filter: saturate(0.88);
+  transition: opacity 1600ms var(--ease);
+  pointer-events: none;
+}
+
+.backdrop-layer.backdrop--visible {
+  opacity: 0.55;
+  transform: scale(1.06);
+  transition: opacity 1600ms var(--ease), transform 7000ms linear;
+}
+
+.backdrop-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(120% 100% at 20% 100%,
+      var(--background) 0%,
+      transparent 55%),
+    linear-gradient(180deg, color-mix(in srgb, var(--background) 70%, transparent) 0%, transparent 35%, var(--background) 100%);
+  transition: background 1400ms var(--ease);
+}
+
+/* ---------- header ---------- */
+
+.top-bar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem clamp(1.5rem, 5vw, 4rem) 0;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink);
+  opacity: 0.85;
+  transition: font-family 1ms, color 1400ms var(--ease);
+}
+
+.top-bar__right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.next-arrow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.55rem 0.55rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent);
+  border-radius: 999px;
+  color: var(--ink);
+  transition: border-color 300ms var(--ease), background 300ms var(--ease), transform 300ms var(--ease);
+}
+
+.next-arrow:hover,
+.next-arrow:focus-visible {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  transform: translateX(2px);
+}
+
+.next-arrow:active {
+  transform: translateX(4px) scale(0.97);
+}
+
+.next-arrow__label {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.next-arrow__icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--accent);
+  box-sizing: content-box;
+  transition: background 300ms var(--ease), color 300ms var(--ease);
+}
+
+.progress__dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--ink) 35%, transparent);
+  transition: background 500ms var(--ease), transform 500ms var(--ease);
+}
+
+.progress__dot--active {
+  background: var(--accent);
+  transform: scale(1.5);
+}
+
+/* ---------- world (the only view — full screen, always on) ---------- */
+
+.world {
+  position: relative;
+  z-index: 2;
+  min-height: calc(100vh - 5rem);
+  display: flex;
+  align-items: flex-end;
+  padding: 0 clamp(1.5rem, 6vw, 5rem) clamp(2.5rem, 6vw, 5rem);
+}
+
+.world__panel {
+  max-width: 34rem;
+}
+
+.world--pulse .world__eyebrow,
+.world--pulse .world__title,
+.world--pulse .world__creature,
+.world--pulse .world__tagline,
+.world--pulse .world__description {
+  animation: rise-in 900ms var(--ease) both;
+}
+
+.world--pulse .world__title {
+  animation-delay: 60ms;
+}
+
+.world--pulse .world__creature {
+  animation-delay: 110ms;
+}
+
+.world--pulse .world__tagline {
+  animation-delay: 160ms;
+}
+
+.world--pulse .world__description {
+  animation-delay: 220ms;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.world__eyebrow {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  transition: color 1400ms var(--ease);
+}
+
+.world__title {
+  font-family: var(--font-display);
+  font-weight: var(--title-weight, 700);
+  font-size: clamp(2.6rem, 7vw, 5rem);
+  line-height: 1;
+  letter-spacing: var(--title-tracking, 0em);
+  margin-bottom: 0.6rem;
+  transition: letter-spacing 1400ms var(--ease);
+}
+
+.world__creature {
+  display: block;
+  font-size: 1rem;
+  font-style: italic;
+  opacity: 0.7;
+  margin-bottom: 1.6rem;
+}
+
+.world__tagline {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  font-style: var(--tagline-style, normal);
+  color: var(--accent);
+  margin-bottom: 1rem;
+  transition: color 1400ms var(--ease);
+}
+
+.world__description {
+  font-weight: 300;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  opacity: 0.8;
+  max-width: 30rem;
+}
+
+@media (max-width: 720px) {
+  .world {
+    align-items: center;
+    text-align: left;
+  }
+}

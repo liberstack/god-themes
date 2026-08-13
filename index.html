@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>God Themes</title>
+  <meta name="description" content="Fire, Earth, Sky — three divine natures, cycling endlessly." />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <div class="backdrop-layer" data-backdrop="a"></div>
+  <div class="backdrop-layer" data-backdrop="b"></div>
+  <div class="backdrop-scrim" aria-hidden="true"></div>
+
+  <div class="stage">
+    <header class="top-bar">
+      <span class="wordmark">God Themes</span>
+
+      <div class="top-bar__right">
+        <div class="progress" data-progress></div>
+        <button class="next-arrow" data-next type="button" aria-label="Show next god">
+          <span class="next-arrow__label" data-next-label></span>
+          <svg class="next-arrow__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="world" data-world-panel>
+      <div class="world__panel">
+        <span class="world__eyebrow" data-world-eyebrow></span>
+        <h1 class="world__title" data-world-title></h1>
+        <span class="world__creature" data-world-creature></span>
+        <p class="world__tagline" data-world-tagline></p>
+        <p class="world__description" data-world-description></p>
+      </div>
+    </section>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
