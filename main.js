@@ -1,6 +1,11 @@
 import { themeOrder } from "./config.js";
-import { setTheme } from "./themes.js";
-import { renderWorldPanel, renderProgressDots, setActiveDot, setNextLabel } from "./ui.js";
+import { setTheme } from "./theme-engine.js";
+import {
+  renderWorldPanel,
+  renderProgressDots,
+  setActiveDot,
+  setNextLabel,
+} from "./ui.js";
 
 let index = 0;
 
